@@ -1,0 +1,36 @@
+{
+	"schemaVersion": 1,
+	"id": "meow",
+	"name": "Meow",
+	"version": "${version}",
+	"description": "Press buttons to meow.",
+	"authors":
+	[
+		"Virtuoel"
+	],
+	"contact":
+	{
+		"homepage": "https://modrinth.com/mod/meow",
+		"issues": "https://github.com/Virtuoel/Meow/issues",
+		"sources": "https://github.com/Virtuoel/Meow"
+	},
+	"license": "MIT",
+	"icon": "assets/meow/icon.png",
+	"environment": "*",
+	"depends":
+	{
+		"fabricloader": ">=0.14.8",
+		"fabric-api-base": "*"
+	},
+	"entrypoints":
+	{
+		"main":
+		[
+			"virtuoel.meow.Meow"
+		]
+	},
+	"mixins":
+	[
+		"meow.mixins.json"
+	]
+}
