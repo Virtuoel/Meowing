@@ -29,6 +29,11 @@ public class Meow implements ModInitializer
 	{
 		UseEntityCallback.EVENT.register((player, world, hand, entity, hitResult) ->
 		{
+			if (world.isClient || player.isSpectator())
+			{
+				return ActionResult.PASS;
+			}
+			
 			if (entity instanceof LivingEntity living)
 			{
 				if (entity instanceof TameableEntity tameable)
