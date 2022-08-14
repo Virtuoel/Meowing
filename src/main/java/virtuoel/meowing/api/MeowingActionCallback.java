@@ -1,4 +1,4 @@
-package virtuoel.meow.api;
+package virtuoel.meowing.api;
 
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
@@ -6,12 +6,12 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.world.World;
 
 @FunctionalInterface
-public interface MeowActionCallback
+public interface MeowingActionCallback
 {
-	Event<MeowActionCallback> EVENT = EventFactory.createArrayBacked(MeowActionCallback.class,
+	Event<MeowingActionCallback> EVENT = EventFactory.createArrayBacked(MeowingActionCallback.class,
 		(listeners) -> (entity, world) ->
 		{
-			for (final MeowActionCallback event : listeners)
+			for (final MeowingActionCallback event : listeners)
 			{
 				event.doActionEffects(entity, world);
 			}

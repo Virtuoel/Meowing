@@ -1,11 +1,11 @@
-package virtuoel.meow.api;
+package virtuoel.meowing.api;
 
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 
-public class MeowApi
+public class MeowingApi
 {
 	public static boolean slotContainsCat(LivingEntity entity, EquipmentSlot slot)
 	{

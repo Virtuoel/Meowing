@@ -1,10 +1,10 @@
 {
 	"required": true,
 	"minVersion": "0.8",
-	"package": "virtuoel.meow.mixin",
+	"package": "virtuoel.meowing.mixin",
 	"compatibilityLevel": "JAVA_17",
-	"plugin": "virtuoel.meow.mixin.MeowMixinConfigPlugin",
-	"refmap": "Meow-refmap.json",
+	"plugin": "virtuoel.meowing.mixin.MeowingMixinConfigPlugin",
+	"refmap": "Meowing-refmap.json",
 	"mixins":
 	[
 		

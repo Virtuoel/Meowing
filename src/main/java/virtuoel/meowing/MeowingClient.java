@@ -1,4 +1,4 @@
-package virtuoel.meow;
+package virtuoel.meowing;
 
 import org.lwjgl.glfw.GLFW;
 
@@ -10,9 +10,9 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.network.PacketByteBuf;
 
-public class MeowClient implements ClientModInitializer
+public class MeowingClient implements ClientModInitializer
 {
-	public static final KeyBinding ACTION_KEY = new KeyBinding("key.meow.action", GLFW.GLFW_KEY_LEFT_ALT, "key.categories.meow");
+	public static final KeyBinding ACTION_KEY = new KeyBinding("key.meowing.action", GLFW.GLFW_KEY_LEFT_ALT, "key.categories.meowing");
 	
 	@Override
 	public void onInitializeClient()
@@ -21,9 +21,9 @@ public class MeowClient implements ClientModInitializer
 		
 		ClientTickEvents.START_CLIENT_TICK.register(client ->
 		{
-			if (ACTION_KEY.wasPressed() && ClientPlayNetworking.canSend(Meow.ACTION_PACKET))
+			if (ACTION_KEY.wasPressed() && ClientPlayNetworking.canSend(Meowing.ACTION_PACKET))
 			{
-				ClientPlayNetworking.send(Meow.ACTION_PACKET, new PacketByteBuf(Unpooled.buffer()));
+				ClientPlayNetworking.send(Meowing.ACTION_PACKET, new PacketByteBuf(Unpooled.buffer()));
 			}
 		});
 	}

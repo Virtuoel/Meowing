@@ -1,4 +1,4 @@
-package virtuoel.meow.mixin;
+package virtuoel.meowing.mixin;
 
 import java.util.List;
 import java.util.Set;
@@ -7,11 +7,11 @@ import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 
-import virtuoel.meow.util.VersionUtils;
+import virtuoel.meowing.util.VersionUtils;
 
-public class MeowMixinConfigPlugin implements IMixinConfigPlugin
+public class MeowingMixinConfigPlugin implements IMixinConfigPlugin
 {
-	private static final String MIXIN_PACKAGE = "virtuoel.meow.mixin";
+	private static final String MIXIN_PACKAGE = "virtuoel.meowing.mixin";
 	
 	@Override
 	public void onLoad(String mixinPackage)

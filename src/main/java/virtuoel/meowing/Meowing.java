@@ -1,4 +1,4 @@
-package virtuoel.meow;
+package virtuoel.meowing;
 
 import java.util.List;
 
@@ -31,16 +31,16 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
-import virtuoel.meow.api.MeowActionCallback;
-import virtuoel.meow.api.MeowApi;
+import virtuoel.meowing.api.MeowingActionCallback;
+import virtuoel.meowing.api.MeowingApi;
 
-public class Meow implements ModInitializer
+public class Meowing implements ModInitializer
 {
-	public static final String MOD_ID = "meow";
+	public static final String MOD_ID = "meowing";
 	
 	public static final ILogger LOGGER = MixinService.getService().getLogger(MOD_ID);
 	
-	public Meow()
+	public Meowing()
 	{
 		
 	}
@@ -61,7 +61,7 @@ public class Meow implements ModInitializer
 			SoundEvents.ENTITY_OCELOT_DEATH
 		};
 		
-		MeowActionCallback.EVENT.register((entity, world) ->
+		MeowingActionCallback.EVENT.register((entity, world) ->
 		{
 			final int index = entity instanceof PlayerEntity player ? player.getInventory().selectedSlot % sounds.length : entity.getRandom().nextInt(sounds.length);
 			final SoundEvent sound = sounds[index];
@@ -70,7 +70,7 @@ public class Meow implements ModInitializer
 			world.playSound(null, pos.x, pos.y, pos.z, sound, entity.getSoundCategory(), 1.0F, entity.getSoundPitch());
 		});
 		
-		MeowActionCallback.EVENT.register((entity, world) ->
+		MeowingActionCallback.EVENT.register((entity, world) ->
 		{
 			final int index = entity instanceof PlayerEntity player ? player.getInventory().selectedSlot % sounds.length : entity.getRandom().nextInt(sounds.length);
 			
@@ -90,9 +90,9 @@ public class Meow implements ModInitializer
 		{
 			server.execute(() ->
 			{
-				if (MeowApi.slotContainsCat(player, EquipmentSlot.HEAD) || MeowApi.slotContainsCat(player, EquipmentSlot.MAINHAND) || MeowApi.slotContainsCat(player, EquipmentSlot.OFFHAND))
+				if (MeowingApi.slotContainsCat(player, EquipmentSlot.HEAD) || MeowingApi.slotContainsCat(player, EquipmentSlot.MAINHAND) || MeowingApi.slotContainsCat(player, EquipmentSlot.OFFHAND))
 				{
-					MeowActionCallback.EVENT.invoker().doActionEffects(player, player.getEntityWorld());
+					MeowingActionCallback.EVENT.invoker().doActionEffects(player, player.getEntityWorld());
 				}
 			});
 		});

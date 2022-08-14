@@ -1,5 +1,5 @@
 {
-	"parent": "meow:block/cat",
+	"parent": "meowing:block/cat",
 	"textures":
 	{
 		"texture": "minecraft:entity/cat/persian"

@@ -2,6 +2,6 @@
 	"parent": "minecraft:item/template_spawn_egg",
 	"overrides":
 	[
-		{ "predicate": { "custom_model_data": 1 }, "model": "meow:item/ocelot" }
+		{ "predicate": { "custom_model_data": 1 }, "model": "meowing:item/ocelot" }
 	]
 }

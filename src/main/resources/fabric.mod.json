@@ -1,7 +1,7 @@
 {
 	"schemaVersion": 1,
-	"id": "meow",
-	"name": "Meow",
+	"id": "meowing",
+	"name": "Meowing",
 	"version": "${version}",
 	"description": "Pick up your cat and let it meow at stuff.",
 	"authors":
@@ -10,12 +10,12 @@
 	],
 	"contact":
 	{
-		"homepage": "https://modrinth.com/mod/meow",
-		"issues": "https://github.com/Virtuoel/Meow/issues",
-		"sources": "https://github.com/Virtuoel/Meow"
+		"homepage": "https://modrinth.com/mod/meowing",
+		"issues": "https://github.com/Virtuoel/Meowing/issues",
+		"sources": "https://github.com/Virtuoel/Meowing"
 	},
 	"license": "MIT",
-	"icon": "assets/meow/icon.png",
+	"icon": "assets/meowing/icon.png",
 	"environment": "*",
 	"depends":
 	{
@@ -26,15 +26,15 @@
 	{
 		"main":
 		[
-			"virtuoel.meow.Meow"
+			"virtuoel.meowing.Meowing"
 		],
 		"client":
 		[
-			"virtuoel.meow.MeowClient"
+			"virtuoel.meowing.MeowingClient"
 		]
 	},
 	"mixins":
 	[
-		"meow.mixins.json"
+		"meowing.mixins.json"
 	]
 }
