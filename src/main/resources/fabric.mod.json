@@ -3,7 +3,7 @@
 	"id": "meow",
 	"name": "Meow",
 	"version": "${version}",
-	"description": "Press buttons to meow.",
+	"description": "Pick up your cat and let it meow at stuff.",
 	"authors":
 	[
 		"Virtuoel"
