@@ -14,6 +14,7 @@ import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
@@ -87,6 +88,8 @@ public class Meow implements ModInitializer
 						
 						nbt.putInt("CustomModelData", 1);
 					}
+					
+					entityData.putString("CustomName", Text.Serializer.toJson(entity.getCustomName()));
 					
 					nbt.put("EntityTag", entityData);
 					
