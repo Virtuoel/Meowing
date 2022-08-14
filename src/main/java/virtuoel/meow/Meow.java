@@ -76,10 +76,7 @@ public class Meow implements ModInitializer
 					
 					stack.setNbt(nbt);
 					
-					if (entity.hasCustomName())
-					{
-						stack.setCustomName(entity.getCustomName());
-					}
+					stack.setCustomName(entity.getName());
 					
 					entity.dropStack(stack);
 					entity.remove(RemovalReason.DISCARDED);
