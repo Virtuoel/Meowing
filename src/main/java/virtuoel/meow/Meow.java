@@ -42,6 +42,11 @@ public class Meow implements ModInitializer
 			
 			if (entity instanceof LivingEntity living)
 			{
+				if (living.isBaby())
+				{
+					return ActionResult.PASS;
+				}
+				
 				if (entity instanceof TameableEntity tameable)
 				{
 					if (tameable.isSitting() || !tameable.isOwner(player))
