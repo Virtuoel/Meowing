@@ -4,7 +4,19 @@ import org.spongepowered.asm.logging.ILogger;
 import org.spongepowered.asm.service.MixinService;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.player.UseEntityCallback;
+import net.minecraft.entity.Entity.RemovalReason;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.passive.CatEntity;
+import net.minecraft.entity.passive.OcelotEntity;
+import net.minecraft.entity.passive.TameableEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 
 public class Meow implements ModInitializer
 {
@@ -14,7 +26,61 @@ public class Meow implements ModInitializer
 	
 	public Meow()
 	{
-		
+		UseEntityCallback.EVENT.register((player, world, hand, entity, hitResult) ->
+		{
+			if (entity instanceof TameableEntity tameable)
+			{
+				if (!tameable.isOwner(player))
+				{
+					return ActionResult.PASS;
+				}
+				
+				if (entity.getType() != EntityType.CAT && entity.getType() != EntityType.OCELOT)
+				{
+					return ActionResult.PASS;
+				}
+				
+				if (!player.getStackInHand(Hand.OFF_HAND).isOf(Items.STRING))
+				{
+					return ActionResult.PASS;
+				}
+				
+				final ItemStack stack = entity.getPickBlockStack();
+				
+				if (stack != null && !stack.isEmpty())
+				{
+					final NbtCompound nbt = new NbtCompound();
+					final NbtCompound entityData = new NbtCompound();
+					
+					if (entity instanceof CatEntity cat)
+					{
+						nbt.putInt("CustomModelData", Registry.CAT_VARIANT.getRawId(cat.getVariant()) + 1);
+					}
+					else if (entity instanceof OcelotEntity ocelot)
+					{
+						nbt.putInt("CustomModelData", 1);
+					}
+					
+					tameable.writeCustomDataToNbt(entityData);
+					
+					nbt.put("EntityTag", entityData);
+					
+					stack.setNbt(nbt);
+					
+					if (entity.hasCustomName())
+					{
+						stack.setCustomName(entity.getCustomName());
+					}
+					
+					entity.dropStack(stack);
+					entity.remove(RemovalReason.DISCARDED);
+					
+					return ActionResult.SUCCESS;
+				}
+			}
+			
+			return ActionResult.PASS;
+		});
 	}
 	
 	@Override
