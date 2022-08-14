@@ -5,6 +5,7 @@ import org.spongepowered.asm.service.MixinService;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.Entity.RemovalReason;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
@@ -13,14 +14,20 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.OcelotEntity;
 import net.minecraft.entity.passive.TameableEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
+import virtuoel.meow.api.MeowActionCallback;
+import virtuoel.meow.api.MeowApi;
 
 public class Meow implements ModInitializer
 {
@@ -36,6 +43,39 @@ public class Meow implements ModInitializer
 	@Override
 	public void onInitialize()
 	{
+		final SoundEvent[] sounds =
+		{
+			SoundEvents.ENTITY_CAT_STRAY_AMBIENT,
+			SoundEvents.ENTITY_CAT_AMBIENT,
+			SoundEvents.ENTITY_CAT_PURREOW,
+			SoundEvents.ENTITY_CAT_PURR,
+			SoundEvents.ENTITY_CAT_HISS,
+			SoundEvents.ENTITY_CAT_BEG_FOR_FOOD,
+			SoundEvents.ENTITY_CAT_DEATH,
+			SoundEvents.ENTITY_OCELOT_AMBIENT,
+			SoundEvents.ENTITY_OCELOT_DEATH
+		};
+		
+		MeowActionCallback.EVENT.register((entity, world) ->
+		{
+			final int index = entity instanceof PlayerEntity player ? player.getInventory().selectedSlot % sounds.length : entity.getRandom().nextInt(sounds.length);
+			final SoundEvent sound = sounds[index];
+			final Vec3d pos = entity.getEyePos();
+			
+			world.playSound(null, pos.x, pos.y, pos.z, sound, entity.getSoundCategory(), 1.0F, entity.getSoundPitch());
+		});
+		
+		ServerPlayNetworking.registerGlobalReceiver(ACTION_PACKET, (server, player, handler, buf, responseSender) ->
+		{
+			server.execute(() ->
+			{
+				if (MeowApi.slotContainsCat(player, EquipmentSlot.HEAD) || MeowApi.slotContainsCat(player, EquipmentSlot.MAINHAND) || MeowApi.slotContainsCat(player, EquipmentSlot.OFFHAND))
+				{
+					MeowActionCallback.EVENT.invoker().doActionEffects(player, player.getEntityWorld());
+				}
+			});
+		});
+		
 		UseEntityCallback.EVENT.register((player, world, hand, entity, hitResult) ->
 		{
 			if (world.isClient || player.isSpectator())
@@ -136,4 +176,6 @@ public class Meow implements ModInitializer
 	{
 		return id(paths.length == 0 ? path : path + "/" + String.join("/", paths));
 	}
+	
+	public static final Identifier ACTION_PACKET = id("action");
 }
