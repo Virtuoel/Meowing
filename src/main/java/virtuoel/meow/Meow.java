@@ -119,7 +119,7 @@ public class Meow implements ModInitializer
 					return ActionResult.PASS;
 				}
 				
-				if (!player.getStackInHand(Hand.OFF_HAND).isOf(Items.STRING))
+				if (!player.getStackInHand(Hand.MAIN_HAND).isOf(Items.STRING) && !player.getStackInHand(Hand.OFF_HAND).isOf(Items.STRING))
 				{
 					return ActionResult.PASS;
 				}
@@ -162,6 +162,10 @@ public class Meow implements ModInitializer
 					else if (!player.hasStackEquipped(EquipmentSlot.MAINHAND))
 					{
 						player.equipStack(EquipmentSlot.MAINHAND, stack);
+					}
+					else if (!player.hasStackEquipped(EquipmentSlot.OFFHAND))
+					{
+						player.equipStack(EquipmentSlot.OFFHAND, stack);
 					}
 					else
 					{
