@@ -7,6 +7,7 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.minecraft.entity.Entity.RemovalReason;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.OcelotEntity;
 import net.minecraft.entity.passive.TameableEntity;
@@ -28,9 +29,9 @@ public class Meow implements ModInitializer
 	{
 		UseEntityCallback.EVENT.register((player, world, hand, entity, hitResult) ->
 		{
-			if (entity instanceof TameableEntity tameable)
+			if (entity instanceof LivingEntity living)
 			{
-				if (!tameable.isOwner(player))
+				if (entity instanceof TameableEntity tameable && !tameable.isOwner(player))
 				{
 					return ActionResult.PASS;
 				}
@@ -52,16 +53,21 @@ public class Meow implements ModInitializer
 					final NbtCompound nbt = new NbtCompound();
 					final NbtCompound entityData = new NbtCompound();
 					
+					living.writeCustomDataToNbt(entityData);
+					
 					if (entity instanceof CatEntity cat)
 					{
 						nbt.putInt("CustomModelData", Registry.CAT_VARIANT.getRawId(cat.getVariant()) + 1);
 					}
 					else if (entity instanceof OcelotEntity ocelot)
 					{
+						if (entityData.contains("Trusting") && !entityData.getBoolean("Trusting"))
+						{
+							return ActionResult.PASS;
+						}
+						
 						nbt.putInt("CustomModelData", 1);
 					}
-					
-					tameable.writeCustomDataToNbt(entityData);
 					
 					nbt.put("EntityTag", entityData);
 					
