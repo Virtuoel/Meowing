@@ -13,6 +13,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.mob.PhantomEntity;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.OcelotEntity;
@@ -77,7 +78,11 @@ public class Meow implements ModInitializer
 			{
 				final List<PhantomEntity> phantoms = entity.world.getEntitiesByClass(PhantomEntity.class, entity.getBoundingBox().expand(16.0), EntityPredicates.VALID_ENTITY);
 				
-				phantoms.forEach(p -> p.setTarget(null));
+				phantoms.forEach(e -> e.setTarget(null));
+				
+				final List<CreeperEntity> creepers = entity.world.getEntitiesByClass(CreeperEntity.class, entity.getBoundingBox().expand(16.0), EntityPredicates.VALID_ENTITY);
+				
+				creepers.forEach(e -> e.setTarget(null));
 			}
 		});
 		
