@@ -7,6 +7,8 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.minecraft.entity.Entity.RemovalReason;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.OcelotEntity;
@@ -97,7 +99,24 @@ public class Meow implements ModInitializer
 					
 					stack.setCustomName(entity.getName());
 					
-					entity.dropStack(stack);
+					if (!player.hasStackEquipped(EquipmentSlot.HEAD))
+					{
+						player.equipStack(EquipmentSlot.HEAD, stack);
+					}
+					else if (!player.hasStackEquipped(EquipmentSlot.MAINHAND))
+					{
+						player.equipStack(EquipmentSlot.MAINHAND, stack);
+					}
+					else
+					{
+						final ItemEntity itemEntity = entity.dropStack(stack);
+						
+						if (itemEntity != null)
+						{
+							itemEntity.resetPickupDelay();
+						}
+					}
+					
 					entity.remove(RemovalReason.DISCARDED);
 					
 					return ActionResult.SUCCESS;
