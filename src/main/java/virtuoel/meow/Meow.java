@@ -1,5 +1,7 @@
 package virtuoel.meow;
 
+import java.util.List;
+
 import org.spongepowered.asm.logging.ILogger;
 import org.spongepowered.asm.service.MixinService;
 
@@ -11,6 +13,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.mob.PhantomEntity;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.OcelotEntity;
 import net.minecraft.entity.passive.TameableEntity;
@@ -18,6 +21,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
@@ -63,6 +67,18 @@ public class Meow implements ModInitializer
 			final Vec3d pos = entity.getEyePos();
 			
 			world.playSound(null, pos.x, pos.y, pos.z, sound, entity.getSoundCategory(), 1.0F, entity.getSoundPitch());
+		});
+		
+		MeowActionCallback.EVENT.register((entity, world) ->
+		{
+			final int index = entity instanceof PlayerEntity player ? player.getInventory().selectedSlot % sounds.length : entity.getRandom().nextInt(sounds.length);
+			
+			if (sounds[index] == SoundEvents.ENTITY_CAT_HISS)
+			{
+				final List<PhantomEntity> phantoms = entity.world.getEntitiesByClass(PhantomEntity.class, entity.getBoundingBox().expand(16.0), EntityPredicates.VALID_ENTITY);
+				
+				phantoms.forEach(p -> p.setTarget(null));
+			}
 		});
 		
 		ServerPlayNetworking.registerGlobalReceiver(ACTION_PACKET, (server, player, handler, buf, responseSender) ->
