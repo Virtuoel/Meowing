@@ -1,0 +1,7 @@
+{
+	"parent": "meow:block/cat",
+	"textures":
+	{
+		"texture": "minecraft:entity/cat/black"
+	}
+} 

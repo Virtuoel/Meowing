@@ -1,0 +1,17 @@
+{
+	"parent": "minecraft:item/template_spawn_egg",
+	"overrides":
+	[
+		{ "predicate": { "custom_model_data": 1 }, "model": "meow:item/tabby" },
+		{ "predicate": { "custom_model_data": 2 }, "model": "meow:item/black" },
+		{ "predicate": { "custom_model_data": 3 }, "model": "meow:item/red" },
+		{ "predicate": { "custom_model_data": 4 }, "model": "meow:item/siamese" },
+		{ "predicate": { "custom_model_data": 5 }, "model": "meow:item/british_shorthair" },
+		{ "predicate": { "custom_model_data": 6 }, "model": "meow:item/calico" },
+		{ "predicate": { "custom_model_data": 7 }, "model": "meow:item/persian" },
+		{ "predicate": { "custom_model_data": 8 }, "model": "meow:item/ragdoll" },
+		{ "predicate": { "custom_model_data": 9 }, "model": "meow:item/white" },
+		{ "predicate": { "custom_model_data": 10 }, "model": "meow:item/jellie" },
+		{ "predicate": { "custom_model_data": 11 }, "model": "meow:item/all_black" }
+	]
+}
