@@ -27,6 +27,12 @@ public class Meow implements ModInitializer
 	
 	public Meow()
 	{
+		
+	}
+	
+	@Override
+	public void onInitialize()
+	{
 		UseEntityCallback.EVENT.register((player, world, hand, entity, hitResult) ->
 		{
 			if (world.isClient || player.isSpectator())
@@ -92,12 +98,6 @@ public class Meow implements ModInitializer
 			
 			return ActionResult.PASS;
 		});
-	}
-	
-	@Override
-	public void onInitialize()
-	{
-		
 	}
 	
 	public static Identifier id(String path)
