@@ -68,13 +68,8 @@ public class Meowing implements ModInitializer
 			final Vec3d pos = entity.getEyePos().add(entity.getRotationVector().multiply(entity.getWidth() * 0.5D));
 			
 			world.playSound(null, pos.x, pos.y, pos.z, sound, entity.getSoundCategory(), 1.0F, entity.getSoundPitch());
-		});
-		
-		MeowingActionCallback.EVENT.register((entity, world) ->
-		{
-			final int index = entity instanceof PlayerEntity player ? player.getInventory().selectedSlot % sounds.length : entity.getRandom().nextInt(sounds.length);
 			
-			if (sounds[index] == SoundEvents.ENTITY_CAT_HISS)
+			if (sound == SoundEvents.ENTITY_CAT_HISS)
 			{
 				final List<PhantomEntity> phantoms = entity.world.getEntitiesByClass(PhantomEntity.class, entity.getBoundingBox().expand(16.0), EntityPredicates.VALID_ENTITY);
 				
