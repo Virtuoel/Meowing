@@ -32,7 +32,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
 import virtuoel.meowing.api.MeowingActionCallback;
-import virtuoel.meowing.api.MeowingApi;
 
 public class Meowing implements ModInitializer
 {
@@ -85,7 +84,7 @@ public class Meowing implements ModInitializer
 		{
 			server.execute(() ->
 			{
-				if (MeowingApi.slotContainsCat(player, EquipmentSlot.HEAD) || MeowingApi.slotContainsCat(player, EquipmentSlot.MAINHAND) || MeowingApi.slotContainsCat(player, EquipmentSlot.OFFHAND))
+				if (!player.isSpectator() && canMeow(player))
 				{
 					MeowingActionCallback.EVENT.invoker().doActionEffects(player, player.getEntityWorld());
 				}
@@ -185,6 +184,18 @@ public class Meowing implements ModInitializer
 			
 			return ActionResult.PASS;
 		});
+	}
+	
+	public static boolean canMeow(LivingEntity entity)
+	{
+		return slotContainsCat(entity, EquipmentSlot.HEAD) || slotContainsCat(entity, EquipmentSlot.MAINHAND) || slotContainsCat(entity, EquipmentSlot.OFFHAND);
+	}
+	
+	public static boolean slotContainsCat(LivingEntity entity, EquipmentSlot slot)
+	{
+		final ItemStack stack = entity.getEquippedStack(slot);
+		
+		return (stack.isOf(Items.CAT_SPAWN_EGG) || stack.isOf(Items.OCELOT_SPAWN_EGG)) && stack.hasNbt() && stack.getNbt().getInt("CustomModelData") > 0;
 	}
 	
 	public static Identifier id(String path)
