@@ -169,6 +169,11 @@ public class Meowing implements ModInitializer
 					return ActionResult.PASS;
 				}
 				
+				if (isCat(player.getStackInHand(hand)))
+				{
+					return ActionResult.FAIL;
+				}
+				
 				final ItemStack stack = entity.getPickBlockStack();
 				
 				if (stack != null && !stack.isEmpty())
