@@ -1,4 +1,15 @@
 {
 	"key.meowing.action": "Cat Action",
-	"key.categories.meowing": "Meowing"
+	"key.categories.meowing": "Meowing",
+	"entity.minecraft.cat.variant.tabby": "Tabby",
+	"entity.minecraft.cat.variant.black": "Black",
+	"entity.minecraft.cat.variant.red": "Red",
+	"entity.minecraft.cat.variant.siamese": "Siamese",
+	"entity.minecraft.cat.variant.british_shorthair": "British Shorthair",
+	"entity.minecraft.cat.variant.calico": "Calico",
+	"entity.minecraft.cat.variant.persian": "Persian",
+	"entity.minecraft.cat.variant.ragdoll": "Ragdoll",
+	"entity.minecraft.cat.variant.white": "White",
+	"entity.minecraft.cat.variant.jellie": "Jellie",
+	"entity.minecraft.cat.variant.all_black": "All Black"
 }
