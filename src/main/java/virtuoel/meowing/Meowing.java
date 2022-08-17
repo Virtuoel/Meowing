@@ -19,6 +19,7 @@ import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.mob.PhantomEntity;
 import net.minecraft.entity.passive.CatEntity;
+import net.minecraft.entity.passive.CatVariant;
 import net.minecraft.entity.passive.OcelotEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -26,12 +27,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtList;
+import net.minecraft.nbt.NbtString;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.Style;
 import net.minecraft.text.Text;
+import net.minecraft.text.Texts;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
@@ -185,12 +191,17 @@ public class Meowing implements ModInitializer
 				{
 					final NbtCompound nbt = new NbtCompound();
 					final NbtCompound entityData = new NbtCompound();
+					final NbtList lore = new NbtList();
 					
 					living.writeCustomDataToNbt(entityData);
 					
 					if (entity instanceof CatEntity cat)
 					{
-						nbt.putInt("CustomModelData", Registry.CAT_VARIANT.getRawId(cat.getVariant()) + 1);
+						final CatVariant variant = cat.getVariant();
+						nbt.putInt("CustomModelData", Registry.CAT_VARIANT.getRawId(variant) + 1);
+						
+						final Identifier id = Registry.CAT_VARIANT.getId(variant);
+						lore.add(NbtString.of(Text.Serializer.toJson(Texts.setStyleIfAbsent(Text.translatable(String.format("entity.%s.cat.variant.%s", id.getNamespace(), id.getPath())), Style.EMPTY.withItalic(false).withColor(Formatting.GRAY)))));
 					}
 					else if (entity instanceof OcelotEntity ocelot)
 					{
@@ -209,6 +220,11 @@ public class Meowing implements ModInitializer
 					stack.setNbt(nbt);
 					
 					stack.setCustomName(entity.getName());
+					
+					if (!lore.isEmpty())
+					{
+						stack.getOrCreateSubNbt("display").put("Lore", lore);
+					}
 					
 					if (!player.hasStackEquipped(EquipmentSlot.HEAD))
 					{
