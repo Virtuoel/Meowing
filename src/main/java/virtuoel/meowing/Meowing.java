@@ -237,6 +237,7 @@ public class Meowing implements ModInitializer
 					
 					stack.setNbt(nbt);
 					
+					stack.setRepairCost(1000);
 					stack.setCustomName(entity.getName());
 					
 					if (!lore.isEmpty())
