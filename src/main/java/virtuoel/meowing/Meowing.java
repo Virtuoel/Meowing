@@ -213,6 +213,8 @@ public class Meowing implements ModInitializer
 						nbt.putInt("CustomModelData", 1);
 					}
 					
+					entityData.putBoolean("PersistenceRequired", true);
+					
 					entityData.putString("CustomName", Text.Serializer.toJson(entity.getCustomName()));
 					
 					nbt.put("EntityTag", entityData);
