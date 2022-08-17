@@ -9,7 +9,10 @@ import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.option.KeyBinding;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.text.LiteralTextContent;
 import net.minecraft.text.Text;
 
 public class MeowingClient implements ClientModInitializer
@@ -33,7 +36,24 @@ public class MeowingClient implements ClientModInitializer
 		{
 			if (!lines.isEmpty() && Meowing.isCat(stack))
 			{
-				lines.set(0, Text.empty().append(stack.getName()).formatted(stack.getRarity().formatting));
+				final Text name = stack.getName();
+				if (!(name.getContent() instanceof LiteralTextContent))
+				{
+					Text line = null;
+					final NbtCompound entityData = stack.getNbt().getCompound("EntityTag");
+					
+					if (entityData != null && entityData.contains("CustomName", NbtElement.STRING_TYPE))
+					{
+						line = Text.Serializer.fromJson(entityData.getString("CustomName"));
+					}
+					
+					if (line == null)
+					{
+						line = Text.empty().append(name).formatted(stack.getRarity().formatting);
+					}
+					
+					lines.set(0, line);
+				}
 			}
 		});
 	}
