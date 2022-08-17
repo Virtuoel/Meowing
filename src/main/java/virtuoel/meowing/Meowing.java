@@ -93,7 +93,7 @@ public class Meowing implements ModInitializer
 		
 		UseBlockCallback.EVENT.register((player, world, hand, hitResult) ->
 		{
-			if (slotContainsCat(player, hand == Hand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND))
+			if (isCat(player.getStackInHand(hand)))
 			{
 				if (world.getBlockState(hitResult.getBlockPos()).isOf(Blocks.SPAWNER))
 				{
@@ -206,8 +206,11 @@ public class Meowing implements ModInitializer
 	
 	public static boolean slotContainsCat(LivingEntity entity, EquipmentSlot slot)
 	{
-		final ItemStack stack = entity.getEquippedStack(slot);
-		
+		return isCat(entity.getEquippedStack(slot));
+	}
+	
+	public static boolean isCat(ItemStack stack)
+	{
 		return (stack.isOf(Items.CAT_SPAWN_EGG) || stack.isOf(Items.OCELOT_SPAWN_EGG)) && stack.hasNbt() && stack.getNbt().getInt("CustomModelData") > 0;
 	}
 	
