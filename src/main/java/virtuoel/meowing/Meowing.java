@@ -8,6 +8,7 @@ import org.spongepowered.asm.service.MixinService;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
+import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity.RemovalReason;
@@ -40,6 +41,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
@@ -103,6 +105,18 @@ public class Meowing implements ModInitializer
 			});
 		});
 		
+		UseItemCallback.EVENT.register((player, world, hand) ->
+		{
+			final ItemStack held = player.getStackInHand(hand);
+			if (!player.isSpectator() && isCat(held))
+			{
+				player.swingHand(hand);
+				return TypedActionResult.success(held);
+			}
+			
+			return TypedActionResult.pass(held);
+		});
+		
 		UseBlockCallback.EVENT.register((player, world, hand, hitResult) ->
 		{
 			final ItemStack held = player.getStackInHand(hand);
@@ -110,6 +124,8 @@ public class Meowing implements ModInitializer
 			{
 				if (world.getBlockState(hitResult.getBlockPos()).isOf(Blocks.SPAWNER))
 				{
+					player.swingHand(hand);
+					
 					if (!world.isClient)
 					{
 						BlockPos pos = hitResult.getBlockPos();
