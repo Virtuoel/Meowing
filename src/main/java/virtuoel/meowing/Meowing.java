@@ -166,7 +166,7 @@ public class Meowing implements ModInitializer
 				
 				if (isCat(player.getStackInHand(hand)))
 				{
-					return ActionResult.CONSUME;
+					return ActionResult.SUCCESS;
 				}
 				
 				if (world.isClient)
