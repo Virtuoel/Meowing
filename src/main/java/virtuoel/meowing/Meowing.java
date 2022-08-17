@@ -139,7 +139,7 @@ public class Meowing implements ModInitializer
 		
 		UseEntityCallback.EVENT.register((player, world, hand, entity, hitResult) ->
 		{
-			if (world.isClient || player.isSpectator())
+			if (player.isSpectator())
 			{
 				return ActionResult.PASS;
 			}
@@ -164,14 +164,19 @@ public class Meowing implements ModInitializer
 					return ActionResult.PASS;
 				}
 				
-				if (!player.getStackInHand(Hand.MAIN_HAND).isOf(Items.STRING) && !player.getStackInHand(Hand.OFF_HAND).isOf(Items.STRING))
+				if (isCat(player.getStackInHand(hand)))
+				{
+					return ActionResult.CONSUME;
+				}
+				
+				if (world.isClient)
 				{
 					return ActionResult.PASS;
 				}
 				
-				if (isCat(player.getStackInHand(hand)))
+				if (!player.getStackInHand(Hand.MAIN_HAND).isOf(Items.STRING) && !player.getStackInHand(Hand.OFF_HAND).isOf(Items.STRING))
 				{
-					return ActionResult.FAIL;
+					return ActionResult.PASS;
 				}
 				
 				final ItemStack stack = entity.getPickBlockStack();
