@@ -6,8 +6,10 @@ import org.spongepowered.asm.logging.ILogger;
 import org.spongepowered.asm.service.MixinService;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity.RemovalReason;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
@@ -87,6 +89,19 @@ public class Meowing implements ModInitializer
 					MeowingActionCallback.EVENT.invoker().doActionEffects(player, player.getEntityWorld());
 				}
 			});
+		});
+		
+		UseBlockCallback.EVENT.register((player, world, hand, hitResult) ->
+		{
+			if (slotContainsCat(player, hand == Hand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND))
+			{
+				if (world.getBlockState(hitResult.getBlockPos()).isOf(Blocks.SPAWNER))
+				{
+					return ActionResult.CONSUME;
+				}
+			}
+			
+			return ActionResult.PASS;
 		});
 		
 		UseEntityCallback.EVENT.register((player, world, hand, entity, hitResult) ->
