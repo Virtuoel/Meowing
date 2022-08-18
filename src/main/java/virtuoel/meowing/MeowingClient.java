@@ -15,12 +15,12 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.LiteralTextContent;
 import net.minecraft.text.Text;
 
-public class MeowingClient implements ClientModInitializer
+public final class MeowingClient implements ClientModInitializer
 {
 	public static final KeyBinding ACTION_KEY = new KeyBinding("key.meowing.action", GLFW.GLFW_KEY_LEFT_ALT, "key.categories.meowing");
 	
 	@Override
-	public void onInitializeClient()
+	public final void onInitializeClient()
 	{
 		KeyBindingHelper.registerKeyBinding(ACTION_KEY);
 		

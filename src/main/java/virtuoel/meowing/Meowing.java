@@ -48,7 +48,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.event.GameEvent;
 import virtuoel.meowing.api.MeowingActionCallback;
 
-public class Meowing implements ModInitializer
+public final class Meowing implements ModInitializer
 {
 	public static final String MOD_ID = "meowing";
 	
@@ -60,7 +60,7 @@ public class Meowing implements ModInitializer
 	}
 	
 	@Override
-	public void onInitialize()
+	public final void onInitialize()
 	{
 		final SoundEvent[] sounds =
 		{
@@ -128,11 +128,11 @@ public class Meowing implements ModInitializer
 					
 					if (!world.isClient)
 					{
-						BlockPos pos = hitResult.getBlockPos();
-						Direction direction = hitResult.getSide();
+						final BlockPos pos = hitResult.getBlockPos();
+						final Direction direction = hitResult.getSide();
 						if (player.canPlaceOn(pos, direction, held))
 						{
-							EntityType<?> entityType = ((SpawnEggItem) held.getItem()).getEntityType(held.getNbt());
+							final EntityType<?> entityType = ((SpawnEggItem) held.getItem()).getEntityType(held.getNbt());
 							if (null != entityType.spawnFromItemStack(
 								(ServerWorld) world,
 								held,
@@ -285,27 +285,27 @@ public class Meowing implements ModInitializer
 		});
 	}
 	
-	public static boolean canMeow(LivingEntity entity)
+	public static boolean canMeow(final LivingEntity entity)
 	{
 		return slotContainsCat(entity, EquipmentSlot.HEAD) || slotContainsCat(entity, EquipmentSlot.MAINHAND) || slotContainsCat(entity, EquipmentSlot.OFFHAND);
 	}
 	
-	public static boolean slotContainsCat(LivingEntity entity, EquipmentSlot slot)
+	public static boolean slotContainsCat(final LivingEntity entity, final EquipmentSlot slot)
 	{
 		return isCat(entity.getEquippedStack(slot));
 	}
 	
-	public static boolean isCat(ItemStack stack)
+	public static boolean isCat(final ItemStack stack)
 	{
 		return (stack.isOf(Items.CAT_SPAWN_EGG) || stack.isOf(Items.OCELOT_SPAWN_EGG)) && stack.hasNbt() && stack.getNbt().getInt("CustomModelData") > 0;
 	}
 	
-	public static Identifier id(String path)
+	public static Identifier id(final String path)
 	{
 		return new Identifier(MOD_ID, path);
 	}
 	
-	public static Identifier id(String path, String... paths)
+	public static Identifier id(final String path, final String... paths)
 	{
 		return id(paths.length == 0 ? path : path + "/" + String.join("/", paths));
 	}

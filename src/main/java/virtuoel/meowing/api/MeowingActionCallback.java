@@ -23,5 +23,5 @@ public interface MeowingActionCallback
 	);
 	
 	@ApiStatus.Experimental
-	void doActionEffects(LivingEntity entity, World world);
+	void doActionEffects(final LivingEntity entity, final World world);
 }
