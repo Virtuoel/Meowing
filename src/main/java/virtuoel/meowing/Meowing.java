@@ -1,6 +1,7 @@
 package virtuoel.meowing;
 
 import java.util.List;
+import java.util.function.UnaryOperator;
 
 import org.spongepowered.asm.logging.ILogger;
 import org.spongepowered.asm.service.MixinService;
@@ -36,7 +37,6 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
-import net.minecraft.text.Texts;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
@@ -216,8 +216,16 @@ public class Meowing implements ModInitializer
 						final CatVariant variant = cat.getVariant();
 						nbt.putInt("CustomModelData", Registry.CAT_VARIANT.getRawId(variant) + 1);
 						
+						final UnaryOperator<Style> operator = s -> s.withColor(Formatting.GRAY).withItalic(false);
+						
 						final Identifier id = Registry.CAT_VARIANT.getId(variant);
-						lore.add(NbtString.of(Text.Serializer.toJson(Texts.setStyleIfAbsent(Text.translatable(String.format("entity.%s.cat.variant.%s", id.getNamespace(), id.getPath())), Style.EMPTY.withItalic(false).withColor(Formatting.GRAY)))));
+						lore.add(NbtString.of(Text.Serializer.toJson(Text.translatable(String.format("entity.%s.cat.variant.%s", id.getNamespace(), id.getPath())).styled(operator))));
+						
+						final LivingEntity owner = cat.getOwner();
+						if (owner != null)
+						{
+							lore.add(NbtString.of(Text.Serializer.toJson(Text.translatable("item.meowing.cat.owner", owner.getName()).styled(operator))));
+						}
 					}
 					else if (entity instanceof OcelotEntity ocelot)
 					{

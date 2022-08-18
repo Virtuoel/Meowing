@@ -11,5 +11,6 @@
 	"entity.minecraft.cat.variant.ragdoll": "Ragdoll",
 	"entity.minecraft.cat.variant.white": "White",
 	"entity.minecraft.cat.variant.jellie": "Jellie",
-	"entity.minecraft.cat.variant.all_black": "All Black"
+	"entity.minecraft.cat.variant.all_black": "All Black",
+	"item.meowing.cat.owner": "Owner: %s"
 }
