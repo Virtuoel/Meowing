@@ -3,7 +3,7 @@
 	"id": "meowing",
 	"name": "Meowing",
 	"version": "${version}",
-	"description": "Pick up your cat and let it meow at stuff.",
+	"description": "Pick up your Cat and let it meow at stuff.",
 	"authors":
 	[
 		"Virtuoel"
@@ -20,7 +20,12 @@
 	"depends":
 	{
 		"fabricloader": ">=0.14.8",
-		"fabric-api-base": "*"
+		"fabric-api-base": "*",
+		"fabric-events-interaction-v0": "*",
+		"fabric-item-api-v1": "*",
+		"fabric-key-binding-api-v1": "*",
+		"fabric-networking-api-v1": "*",
+		"fabric-resource-loader-v0": "*"
 	},
 	"entrypoints":
 	{
