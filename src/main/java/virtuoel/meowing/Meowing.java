@@ -3,8 +3,8 @@ package virtuoel.meowing;
 import java.util.List;
 import java.util.function.UnaryOperator;
 
-import org.spongepowered.asm.logging.ILogger;
-import org.spongepowered.asm.service.MixinService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
@@ -52,12 +52,7 @@ public final class Meowing implements ModInitializer
 {
 	public static final String MOD_ID = "meowing";
 	
-	public static final ILogger LOGGER = MixinService.getService().getLogger(MOD_ID);
-	
-	public Meowing()
-	{
-		
-	}
+	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 	
 	@Override
 	public final void onInitialize()
