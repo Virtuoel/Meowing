@@ -219,7 +219,7 @@ public class Meowing implements ModInitializer
 						final UnaryOperator<Style> operator = s -> s.withColor(Formatting.GRAY).withItalic(false);
 						
 						final Identifier id = Registry.CAT_VARIANT.getId(variant);
-						lore.add(NbtString.of(Text.Serializer.toJson(Text.translatable(String.format("entity.%s.cat.variant.%s", id.getNamespace(), id.getPath())).styled(operator))));
+						lore.add(NbtString.of(Text.Serializer.toJson(Text.translatable(String.format("cat_variant.%s.%s", id.getNamespace(), id.getPath())).styled(operator))));
 						
 						final LivingEntity owner = cat.getOwner();
 						if (owner != null)
