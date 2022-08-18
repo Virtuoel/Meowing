@@ -37,10 +37,11 @@ public final class MeowingClient implements ClientModInitializer
 			if (!lines.isEmpty() && Meowing.isCat(stack))
 			{
 				final Text name = stack.getName();
+				final NbtCompound nbt = stack.getNbt();
+				final NbtCompound entityData = nbt.getCompound("EntityTag");
 				if (!(name.getContent() instanceof LiteralTextContent))
 				{
 					final Text line;
-					final NbtCompound entityData = stack.getNbt().getCompound("EntityTag");
 					
 					if (entityData != null && entityData.contains("CustomName", NbtElement.STRING_TYPE))
 					{
