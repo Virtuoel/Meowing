@@ -23,7 +23,6 @@ import net.minecraft.entity.mob.PhantomEntity;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.CatVariant;
 import net.minecraft.entity.passive.OcelotEntity;
-import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -166,14 +165,6 @@ public final class Meowing implements ModInitializer
 				if (living.isBaby())
 				{
 					return ActionResult.PASS;
-				}
-				
-				if (entity instanceof TameableEntity tameable)
-				{
-					if (tameable.isSitting() || !tameable.isOwner(player))
-					{
-						return ActionResult.PASS;
-					}
 				}
 				
 				if (entity.getType() != EntityType.CAT && entity.getType() != EntityType.OCELOT)
